@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FoodTestApp</string>
+    <string name="bottom_nav_home" translatable="false">Главная</string>
+    <string name="bottom_nav_search" translatable="false">Поиск</string>
+    <string name="bottom_nav_bag" translatable="false">Корзина</string>
+    <string name="bottom_nav_profile" translatable="false">Аккаунт</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
