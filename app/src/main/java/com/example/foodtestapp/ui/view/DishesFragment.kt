@@ -11,19 +11,25 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodtestapp.core.Dish
 import com.example.foodtestapp.ui.util.obtainViewModel
+import com.example.foodtestapp.ui.view.adapters.CategoryAdapter
 import com.example.foodtestapp.ui.view.adapters.DishAdapter
+import com.example.foodtestapp.ui.view.adapters.TagAdapter
 import com.example.foodtestapp.ui.view.listeners.OnDishClickListener
+import com.example.foodtestapp.ui.view.listeners.OnTagClickListener
 import com.example.foodtestapp.ui.viewmodel.DishesViewModel
 import online.example.foodtestapp.databinding.FragmentDishesBinding
 
-class DishesFragment : Fragment(), OnDishClickListener {
+class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
     private var _binding: FragmentDishesBinding? = null
     private val binding get() = _binding!!
 
     private val dishesViewModel by lazy { obtainViewModel(DishesViewModel::class.java) }
 
+    private var tagAdapter: TagAdapter? = null
+    private var rvTag: RecyclerView? = null
+
     private var dishAdapter: DishAdapter? = null
-    private var rv: RecyclerView? = null
+    private var rvDish: RecyclerView? = null
     final val KEY_RECYCLER_STATE = "recycler_state"
     private var mBundleRecyclerViewState: Bundle? = null
     private var mListState: Parcelable? = null
@@ -39,20 +45,29 @@ class DishesFragment : Fragment(), OnDishClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
         dishesViewModel.getDishes()
         setupTagAdapter()
         setupDishAdapter()
         initObservers()
+        initViews()
         initListeners()
     }
 
     private fun setupTagAdapter() {
-
+        rvTag = binding.rvTags
+        tagAdapter = TagAdapter(requireContext())
+        tagAdapter!!.setClickListener(this)
+        rvTag!!.adapter = tagAdapter
     }
 
     private fun setupDishAdapter() {
-
+        rvDish = binding.rvDishes
+        mRecyclerView = rvDish
+        dishAdapter = DishAdapter(requireContext())
+        dishAdapter!!.setClickListener(this)
+        rvDish!!.adapter = dishAdapter
+        rvDish!!.adapter?.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
     private fun initListeners() {
@@ -60,6 +75,11 @@ class DishesFragment : Fragment(), OnDishClickListener {
     }
 
     private fun initObservers() {
+        dishesViewModel.allDishes.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                dishAdapter!!.setData(dishesViewModel.allDishes.value)
+            }
+        }
 
     }
 
@@ -67,7 +87,7 @@ class DishesFragment : Fragment(), OnDishClickListener {
 
     }
 
-    override fun onDishClickListener(dish: Dish) {
+    override fun onDishClick(dish: Dish) {
 
     }
 
@@ -93,6 +113,10 @@ class DishesFragment : Fragment(), OnDishClickListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onTagClick(tag: String) {
+
     }
 
 }

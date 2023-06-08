@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.foodtestapp.core.Dish
 import com.example.foodtestapp.ui.util.obtainViewModel
 import com.example.foodtestapp.ui.view.adapters.BagAdapter
-import com.example.foodtestapp.ui.view.listeners.OnBagItemClick
+import com.example.foodtestapp.ui.view.listeners.OnBagItemClickListener
 import com.example.foodtestapp.ui.viewmodel.BagViewModel
 import online.example.foodtestapp.databinding.FragmentBagBinding
 
-class BagFragment : Fragment(), OnBagItemClick {
+class BagFragmentListener : Fragment(), OnBagItemClickListener {
     private var _binding: FragmentBagBinding? = null
     private val binding get() = _binding!!
 

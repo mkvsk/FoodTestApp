@@ -28,9 +28,9 @@ class CategoryAdapter(private val context: Context) :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun setData(data: List<FoodCategory>?) {
+    override fun setData(data: ArrayList<FoodCategory>?) {
         data?.let {
-            this.data = it as ArrayList<FoodCategory>
+            this.data = it
             notifyDataSetChanged()
         }
     }
@@ -61,4 +61,6 @@ class CategoryAdapter(private val context: Context) :
 
         }
     }
+
+
 }

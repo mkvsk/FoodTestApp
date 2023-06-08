@@ -28,9 +28,9 @@ class DishAdapter(private val context: Context) :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun setData(data: List<Dish>?) {
+    override fun setData(data: ArrayList<Dish>?) {
         data?.let {
-            this.data = it as ArrayList<Dish>
+            this.data = it
             notifyDataSetChanged()
         }
     }
@@ -56,9 +56,10 @@ class DishAdapter(private val context: Context) :
                 .into(binding.ivImage)
 
             binding.cvDish.setOnClickListener {
-                listener.onDishClickListener(dishItem)
+                listener.onDishClick(dishItem)
             }
 
         }
     }
+
 }

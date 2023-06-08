@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="14dp"
+    android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvDish"
         style="@style/myMaterialCardRounded"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/item_horizontal_margin"
+        android:layout_marginHorizontal="4dp"
         android:layout_marginVertical="@dimen/item_vertical_margin"
         app:cardElevation="0dp"
         app:cardPreventCornerOverlap="false"
@@ -27,8 +28,8 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/item_horizontal_margin"
                 android:layout_marginTop="@dimen/item_vertical_margin"
-                android:src="@drawable/tmp_dish"
                 android:scaleType="fitCenter"
+                android:src="@drawable/tmp_dish"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="H,1:1"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -39,11 +40,14 @@
 
     <TextView
         android:id="@+id/tvName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="start"
+        android:layout_marginHorizontal="4dp"
+        android:autoSizeMinTextSize="9sp"
+        android:autoSizeStepGranularity="1sp"
         android:maxLines="2"
-        android:textColor="@color/text_color_main"
         android:text="Рис с овощами"
-        android:textSize="14sp" />
+        android:textColor="@color/text_color_main"
+        android:autoSizeMaxTextSize="14sp" />
 </LinearLayout>
