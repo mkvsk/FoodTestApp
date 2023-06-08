@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.FoodTestApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/accent_color</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -10,7 +10,58 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/status_bar_color</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="actionOverflowButtonStyle">@style/IconMenuOverFlow</item>
         <!-- Customize your theme here. -->
+    </style>
+    <!--    colors-->
+    <color name="theme_toolbar_subtitle_text_color">#80000000</color>
+    <color name="theme_toolbar_text_color">#000000</color>
+    <color name="theme_toolbar_ic_color">#000000</color>
+    <color name="status_bar_color">#FFFFFF</color>
+    <color name="theme_cardview_bgr">#F8F7F5</color>
+    <color name="text_color_main">#000000</color>
+
+    <!--    styles-->
+    <style name="IconMenuOverFlow" parent="Widget.AppCompat.Light.ActionButton.Overflow">
+        <item name="tint">@color/theme_toolbar_ic_color</item>
+    </style>
+
+    <style name="ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary." parent="Theme.AppCompat.Light">
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txtSubtitleToolbar">
+        <item name="android:textSize">14sp</item>
+        <item name="titleTextColor">@color/theme_toolbar_subtitle_text_color</item>
+    </style>
+
+    <style name="txtToolbar">
+        <item name="android:textSize">18sp</item>
+        <item name="titleTextColor">@color/theme_toolbar_text_color</item>
+    </style>
+
+    <style name="txtCenterToolbar">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="titleTextColor">@color/theme_toolbar_text_color</item>
+    </style>
+
+    <style name="myMaterialCardRounded" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay_card_custom_corners_round
+        </item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners_round" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">10dp</item>
+        <item name="cornerSizeTopLeft">10dp</item>
+        <item name="cornerSizeBottomRight">10dp</item>
+        <item name="cornerSizeBottomLeft">10dp</item>
     </style>
 </resources>

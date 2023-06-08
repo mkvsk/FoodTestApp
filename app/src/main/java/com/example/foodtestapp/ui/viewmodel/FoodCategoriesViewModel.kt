@@ -18,7 +18,7 @@ class FoodCategoriesViewModel : ViewModel() {
     private val _allCategories = MutableLiveData<ArrayList<FoodCategory>?>()
     val allCategories: LiveData<ArrayList<FoodCategory>?> get() = _allCategories
 
-    fun setCategories(value: ArrayList<FoodCategory>) {
+    fun setCategories(value: ArrayList<FoodCategory>?) {
         _allCategories.value = value
     }
 

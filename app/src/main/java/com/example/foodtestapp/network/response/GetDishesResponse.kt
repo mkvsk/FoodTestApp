@@ -1,7 +1,9 @@
 package com.example.foodtestapp.network.response
 
 import com.example.foodtestapp.core.Dish
+import com.google.gson.annotations.SerializedName
 
-class GetDishesResponse {
-    val allDishes: ArrayList<Dish> = ArrayList()
-}
+class GetDishesResponse(
+    @SerializedName("dishes")
+    val allDishes: ArrayList<Dish>
+)

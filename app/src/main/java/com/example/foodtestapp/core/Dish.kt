@@ -1,14 +1,26 @@
 package com.example.foodtestapp.core
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.gson.annotations.SerializedName
 
 data class Dish(
+    @SerializedName("id")
     var id: Int? = 0,
+
+    @SerializedName("name")
     var name: String? = "",
+
+    @SerializedName("price")
     var price: Double? = 0.0,
+
+    @SerializedName("weight")
     var weight: Double? = 0.0,
+
+    @SerializedName("description")
     var description: String? = "",
+
+    @SerializedName("image_url")
     var image_url: String? = "",
-    @JsonProperty("tegs")
+
+    @SerializedName("tegs")
     var tags: ArrayList<String> = ArrayList()
 )

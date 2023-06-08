@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/home_dest">
+
+    <fragment
+        android:id="@+id/home_dest"
+        android:name="com.example.foodtestapp.ui.view.HomeFragment"
+        android:label="@string/bottom_nav_home"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_go_to_dishes_from_categories"
+            app:destination="@id/dishes_dest"
+            app:exitAnim="@anim/nav_default_enter_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dishes_dest"
+        android:name="com.example.foodtestapp.ui.view.DishesFragment"
+        tools:layout="@layout/fragment_dishes" />
+
+    <fragment
+        android:id="@+id/bag_dest"
+        android:name="com.example.foodtestapp.ui.view.BagFragment"
+        android:label="@string/bottom_nav_bag"
+        tools:layout="@layout/fragment_bag" />
+
+    <!--    <fragment-->
+    <!--        android:id="@+id/navigation_search"-->
+    <!--        android:name="com.example.foodtestapp.ui.dashboard.DashboardFragment"-->
+    <!--        android:label="@string/bottom_nav_search"-->
+    <!--        tools:layout="" />-->
+
+    <!--    <fragment-->
+    <!--        android:id="@+id/navigation_bag"-->
+    <!--        android:name="com.example.foodtestapp.ui.notifications.NotificationsFragment"-->
+    <!--        android:label="@string/bottom_nav_bag"-->
+    <!--        tools:layout="" />-->
+</navigation>
