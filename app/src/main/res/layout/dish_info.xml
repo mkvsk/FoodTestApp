@@ -37,7 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="1337 RUB"
+        android:text="@string/dish_price_format"
         android:textColor="@color/text_color_main"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"

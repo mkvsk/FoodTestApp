@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/bag_dest"
-        android:name="com.example.foodtestapp.ui.view.BagFragmentListener"
+        android:name="com.example.foodtestapp.ui.view.BagFragment"
         android:label="@string/bottom_nav_bag"
         tools:layout="@layout/fragment_bag" />
 

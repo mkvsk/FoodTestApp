@@ -19,6 +19,7 @@ import com.example.foodtestapp.ui.view.adapters.DishAdapter
 import com.example.foodtestapp.ui.view.adapters.TagAdapter
 import com.example.foodtestapp.ui.view.listeners.OnDishClickListener
 import com.example.foodtestapp.ui.view.listeners.OnTagClickListener
+import com.example.foodtestapp.ui.viewmodel.BagViewModel
 import com.example.foodtestapp.ui.viewmodel.DishesViewModel
 import com.example.foodtestapp.ui.viewmodel.FoodCategoriesViewModel
 import online.example.foodtestapp.databinding.FragmentDishesBinding
@@ -29,6 +30,7 @@ class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
 
     private val dishesViewModel by lazy { obtainViewModel(DishesViewModel::class.java) }
     private val foodCategoriesViewModel by lazy { obtainViewModel(FoodCategoriesViewModel::class.java) }
+    private val bagViewModel by lazy { obtainViewModel(BagViewModel::class.java) }
 
     private var tagAdapter: TagAdapter? = null
     private var rvTag: RecyclerView? = null
@@ -58,7 +60,6 @@ class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
         initObservers()
         setupMenu()
         initViews()
-        initListeners()
     }
 
     private fun setupMenu() {
@@ -82,10 +83,6 @@ class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
         rvDish!!.adapter = dishAdapter
         rvDish!!.adapter?.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-    }
-
-    private fun initListeners() {
-
     }
 
     private fun initObservers() {
@@ -125,13 +122,17 @@ class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
 
     override fun onDishClick(dish: Dish) {
         val dishInfoDialog = AppDialogBuilder()
-        dishInfoDialog.getDishInfoDialog(dish, requireContext(), layoutInflater, object : AppDialogListener {
-            override fun onClick(addToBag: Boolean) {
-                if (addToBag) {
-
+        dishInfoDialog.getDishInfoDialog(
+            dish,
+            requireContext(),
+            layoutInflater,
+            object : AppDialogListener {
+                override fun onClick(addToBag: Boolean) {
+                    if (addToBag) {
+                        bagViewModel.addToBag(dish)
+                    }
                 }
-            }
-        }).show()
+            }).show()
     }
 
     override fun onResume() {

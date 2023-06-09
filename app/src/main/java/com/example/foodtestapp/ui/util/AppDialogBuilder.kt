@@ -46,6 +46,7 @@ class AppDialogBuilder {
         description.text = dish.description.toString()
         btnAddToBag.setOnClickListener {
             listener.onClick(true)
+            dialog.dismiss()
         }
         btnClose.setOnClickListener {
             dialog.dismiss()

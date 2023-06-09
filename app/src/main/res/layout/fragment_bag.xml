@@ -1,8 +1,67 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.foodtestapp.ui.view.BagFragmentListener">
+    android:background="@color/white"
+    tools:context="com.example.foodtestapp.ui.view.BagFragment">
 
+    <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        local:layout_constraintLeft_toLeftOf="parent"
+        local:layout_constraintRight_toRightOf="parent"
+        local:layout_constraintTop_toTopOf="parent"
+        local:navigationIcon="@drawable/ic_location"
+        local:popupTheme="@style/ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary."
+        local:subtitle="12 августа, 2023"
+        local:subtitleTextAppearance="@style/txtSubtitleToolbar"
+        local:subtitleTextColor="@color/theme_toolbar_subtitle_text_color"
+        local:theme="@style/ThemeOverlay.AppCompat.Dark"
+        local:title="Санкт-Петербург"
+        local:titleTextAppearance="@style/txtToolbar"
+        local:titleTextColor="@color/theme_toolbar_text_color">
 
-</FrameLayout>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/toolbar_user_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/item_horizontal_margin"
+            android:clickable="false"
+            android:scaleType="centerCrop"
+            android:src="@drawable/user_photo"
+            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_bag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:itemCount="3"
+        tools:listitem="@layout/rv_bag_item" />
+
+    <Button
+        android:id="@+id/btnAddToBag"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginHorizontal="@dimen/item_horizontal_margin"
+        android:layout_marginBottom="16dp"
+        android:text="@string/bag_dish_price_format"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

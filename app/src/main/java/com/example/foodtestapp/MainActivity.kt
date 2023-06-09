@@ -3,9 +3,15 @@ package com.example.foodtestapp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.foodtestapp.ui.viewmodel.BagViewModel
 import com.example.foodtestapp.ui.viewmodel.DishesViewModel
 import com.example.foodtestapp.ui.viewmodel.FoodCategoriesViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import online.example.foodtestapp.R
 import online.example.foodtestapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         instantiateViewModels()
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val navView: BottomNavigationView = binding.navView
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val appBarConfig = AppBarConfiguration(setOf(R.id.home_dest, R.id.bag_dest))
+//        setupActionBarWithNavController(navController, appBarConfig)
+        navView.setupWithNavController(navController)
     }
 
     private fun instantiateViewModels() {

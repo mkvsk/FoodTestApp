@@ -7,6 +7,8 @@
     <string name="bottom_nav_bag" translatable="false">Корзина</string>
     <string name="bottom_nav_profile" translatable="false">Аккаунт</string>
     <!--    views-->
+    <string name="bag_dish_price_format" translatable="false">Оплатить %s ₽</string>
+    <string name="dish_price_format" translatable="false">%s ₽</string>
     <string name="dish_weight_format" translatable="false">• %s г</string>
 
 </resources>

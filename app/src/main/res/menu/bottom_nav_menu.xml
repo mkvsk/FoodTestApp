@@ -12,7 +12,7 @@
         android:title="@string/bottom_nav_search" />
 
     <item
-        android:id="@+id/navigation_bag"
+        android:id="@+id/bag_dest"
         android:icon="@drawable/ic_bag"
         android:title="@string/bottom_nav_bag" />
 

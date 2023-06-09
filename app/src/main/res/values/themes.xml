@@ -23,7 +23,8 @@
     <color name="status_bar_color">#FFFFFF</color>
     <color name="theme_cardview_bgr">#F8F7F5</color>
     <color name="text_color_main">#000000</color>
-
+    <color name="theme_ic_color">#000000</color>
+    <color name="bag_buttons_bgr_color">#EFEEEC</color>
     <!--    styles-->
     <style name="IconMenuOverFlow" parent="Widget.AppCompat.Light.ActionButton.Overflow">
         <item name="tint">@color/theme_toolbar_ic_color</item>
