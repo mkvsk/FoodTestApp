@@ -56,7 +56,7 @@ class CategoryAdapter(private val context: Context) :
                 .into(binding.ivCategory)
 
             binding.cvCategory.setOnClickListener {
-                listener.onCategoryClick()
+                listener.onCategoryClick(foodCategoryItem)
             }
 
         }

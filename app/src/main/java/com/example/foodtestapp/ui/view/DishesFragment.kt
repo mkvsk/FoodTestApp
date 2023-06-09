@@ -1,5 +1,6 @@
 package com.example.foodtestapp.ui.view
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,15 +9,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodtestapp.core.Dish
+import com.example.foodtestapp.ui.util.AppDialogBuilder
+import com.example.foodtestapp.ui.util.AppDialogListener
 import com.example.foodtestapp.ui.util.obtainViewModel
-import com.example.foodtestapp.ui.view.adapters.CategoryAdapter
 import com.example.foodtestapp.ui.view.adapters.DishAdapter
 import com.example.foodtestapp.ui.view.adapters.TagAdapter
 import com.example.foodtestapp.ui.view.listeners.OnDishClickListener
 import com.example.foodtestapp.ui.view.listeners.OnTagClickListener
 import com.example.foodtestapp.ui.viewmodel.DishesViewModel
+import com.example.foodtestapp.ui.viewmodel.FoodCategoriesViewModel
 import online.example.foodtestapp.databinding.FragmentDishesBinding
 
 class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
@@ -24,12 +28,15 @@ class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
     private val binding get() = _binding!!
 
     private val dishesViewModel by lazy { obtainViewModel(DishesViewModel::class.java) }
+    private val foodCategoriesViewModel by lazy { obtainViewModel(FoodCategoriesViewModel::class.java) }
 
     private var tagAdapter: TagAdapter? = null
     private var rvTag: RecyclerView? = null
 
     private var dishAdapter: DishAdapter? = null
     private var rvDish: RecyclerView? = null
+    private var dishesByTag: ArrayList<Dish> = ArrayList()
+
     final val KEY_RECYCLER_STATE = "recycler_state"
     private var mBundleRecyclerViewState: Bundle? = null
     private var mListState: Parcelable? = null
@@ -49,8 +56,15 @@ class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
         setupTagAdapter()
         setupDishAdapter()
         initObservers()
+        setupMenu()
         initViews()
         initListeners()
+    }
+
+    private fun setupMenu() {
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun setupTagAdapter() {
@@ -75,9 +89,31 @@ class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
     }
 
     private fun initObservers() {
+        foodCategoriesViewModel.selectedCategory.observe(viewLifecycleOwner) {
+            binding.toolbarTitle.text = it.name.toString()
+        }
+
         dishesViewModel.allDishes.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
                 dishAdapter!!.setData(dishesViewModel.allDishes.value)
+            }
+        }
+
+        dishesViewModel.allTags.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                tagAdapter!!.setData(dishesViewModel.allTags.value)
+                tagAdapter!!.setSelected(0)
+            }
+        }
+
+        dishesViewModel.tag.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty() && (!dishesViewModel.allDishes.value.isNullOrEmpty())) {
+                dishesByTag.addAll(dishesViewModel.allDishes.value!!.filter { dish ->
+                    dish.tags.contains(
+                        dishesViewModel.tag.value
+                    )
+                })
+                dishAdapter!!.setData(dishesByTag)
             }
         }
 
@@ -88,7 +124,14 @@ class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
     }
 
     override fun onDishClick(dish: Dish) {
+        val dishInfoDialog = AppDialogBuilder()
+        dishInfoDialog.getDishInfoDialog(dish, requireContext(), layoutInflater, object : AppDialogListener {
+            override fun onClick(addToBag: Boolean) {
+                if (addToBag) {
 
+                }
+            }
+        }).show()
     }
 
     override fun onResume() {
@@ -115,8 +158,11 @@ class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
         _binding = null
     }
 
-    override fun onTagClick(tag: String) {
-
+    override fun onTagClick(previousItem: Int, selectedItem: Int, tag: String) {
+        tagAdapter!!.selectedTag = selectedItem
+        tagAdapter!!.notifyItemChanged(previousItem)
+        tagAdapter!!.notifyItemChanged(selectedItem)
+        dishesViewModel.setTag(tag)
     }
 
 }

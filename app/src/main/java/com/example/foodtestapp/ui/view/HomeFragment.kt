@@ -1,5 +1,7 @@
 package com.example.foodtestapp.ui.view
 
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -7,9 +9,12 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
+import com.example.foodtestapp.core.FoodCategory
+import com.example.foodtestapp.ui.util.FormatUtil
 import com.example.foodtestapp.ui.util.obtainViewModel
 import com.example.foodtestapp.ui.view.adapters.CategoryAdapter
 import com.example.foodtestapp.ui.view.listeners.OnCategoryClickListener
@@ -17,6 +22,8 @@ import com.example.foodtestapp.ui.viewmodel.FoodCategoriesViewModel
 import online.example.foodtestapp.R
 import online.example.foodtestapp.databinding.FragmentHomeBinding
 import java.time.LocalDateTime
+import java.time.format.TextStyle
+import java.util.*
 
 
 class HomeFragment : Fragment(), OnCategoryClickListener {
@@ -68,41 +75,14 @@ class HomeFragment : Fragment(), OnCategoryClickListener {
 
     private fun initViews() {
 //        allowLocation()
-//        val current = LocalDateTime.now()
-
-//        binding.toolbar.title = "ddd"
-//        binding.toolbar.subtitle = current.toString()
+        binding.toolbar.title = "Location"
+        binding.toolbar.subtitle = FormatUtil.getCurrentDateFormat()
     }
-
-//    private fun allowLocation(): Boolean {
-//        return if (ActivityCompat.checkSelfPermission(
-//                requireContext(),
-//                android.Manifest.permission.ACCESS_COARSE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-//                requireContext(),
-//                android.Manifest.permission.ACCESS_FINE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            ActivityCompat.requestPermissions(
-//                requireContext(),
-//                arrayOf(
-//                    android.Manifest.permission.ACCESS_FINE_LOCATION,
-//                    android.Manifest.permission.ACCESS_COARSE_LOCATION
-//                ), requestcode
-//            )
-//            false
-//        } else {
-//            true
-//        }
-//    }
 
     private fun initListeners() {
 
     }
 
-    override fun onCategoryClick() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_dishes_from_categories)
-    }
 
     override fun onResume() {
         super.onResume()
@@ -127,5 +107,11 @@ class HomeFragment : Fragment(), OnCategoryClickListener {
         super.onDestroy()
         _binding = null
     }
+
+    override fun onCategoryClick(selectedCategory: FoodCategory) {
+        foodCategoriesViewModel.setSelectedCategory(selectedCategory)
+        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_dishes_from_categories)
+    }
+
 
 }

@@ -34,4 +34,10 @@ class FoodCategoriesViewModel : ViewModel() {
 
         })
     }
+
+    private val _selectedCategory = MutableLiveData<FoodCategory>()
+    val selectedCategory: LiveData<FoodCategory> get() = _selectedCategory
+    fun setSelectedCategory(foodCategory: FoodCategory) {
+        _selectedCategory.value = foodCategory
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.foodtestapp.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,15 +24,38 @@ class DishesViewModel : ViewModel() {
     }
 
     fun getDishes() {
+        var tmp = HashSet<String>()
         repository.getDishes(object : ResultCallback<GetDishesResponse> {
             override fun onResult(value: GetDishesResponse?) {
                 value?.let {
                     setDishes(it.allDishes)
+                    it.allDishes.forEach { dish ->
+                        dish.tags.forEach { tag ->
+                            tmp.add(tag)
+                        }
+                    }
+                    setAllTags(tmp)
+                    Log.d(TAG, "onResult SET TAGS: ${allTags.value.toString()}")
                 }
             }
 
             override fun onFailure(value: GetDishesResponse?) {}
 
         })
+    }
+
+
+    private val _allTags = MutableLiveData<HashSet<String>>()
+    val allTags: LiveData<HashSet<String>> get() = _allTags
+
+    fun setAllTags(value: HashSet<String>) {
+        _allTags.value = value
+    }
+
+    private val _tag = MutableLiveData<String>()
+    val tag: LiveData<String> get() = _tag
+
+    fun setTag(value: String) {
+        _tag.value = value
     }
 }

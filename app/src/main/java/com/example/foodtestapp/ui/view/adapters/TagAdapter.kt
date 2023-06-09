@@ -4,17 +4,19 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodtestapp.core.FoodCategory
-import com.example.foodtestapp.ui.view.listeners.OnCategoryClickListener
 import com.example.foodtestapp.ui.view.listeners.OnTagClickListener
+import com.google.android.material.card.MaterialCardView
+import online.example.foodtestapp.R
 import online.example.foodtestapp.databinding.RvTagItemBinding
 
 class TagAdapter(private val context: Context) :
-    RecyclerView.Adapter<TagAdapter.TagItemViewHolder>(), BindableAdapter<String> {
+    RecyclerView.Adapter<TagAdapter.TagItemViewHolder>() {
 
-    private var data: ArrayList<String> = ArrayList()
+    private var data: HashSet<String> = HashSet()
     private lateinit var listener: OnTagClickListener
+    var selectedTag: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagItemViewHolder {
         val binding = RvTagItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -22,7 +24,7 @@ class TagAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: TagAdapter.TagItemViewHolder, position: Int) {
-        val tagItem = data[position]
+        val tagItem = data.elementAt(position)
         holder.bind(tagItem)
     }
 
@@ -35,11 +37,16 @@ class TagAdapter(private val context: Context) :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun setData(data: ArrayList<String>?) {
+    fun setData(data: HashSet<String>?) {
         data?.let {
             this.data = it
             notifyDataSetChanged()
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setSelected(position: Int) {
+        selectedTag = position
     }
 
     inner class TagItemViewHolder(rvTagItemBinding: RvTagItemBinding) :
@@ -47,12 +54,34 @@ class TagAdapter(private val context: Context) :
         private val binding = rvTagItemBinding
 
         fun bind(tagItem: String?) {
+            if (selectedTag == bindingAdapterPosition) {
+                selectItem(binding.cvTag, binding.tvTag)
+            } else {
+                unselectItem(binding.cvTag, binding.tvTag)
+            }
+
             binding.tvTag.text = tagItem.toString()
 
             binding.cvTag.setOnClickListener {
-                listener.onTagClick(tagItem.toString())
+                listener.onTagClick(
+                    selectedTag,
+                    bindingAdapterPosition,
+                    tagItem.toString()
+                )
             }
         }
+    }
+
+    private fun selectItem(cardView: MaterialCardView, textView: TextView) {
+        cardView.setBackgroundResource(R.drawable.selected_tag_item)
+        cardView.isClickable = false
+        textView.isSelected = true
+    }
+
+    private fun unselectItem(cardView: MaterialCardView, textView: TextView) {
+        cardView.setBackgroundResource(R.drawable.unselected_tag_item)
+        cardView.isClickable = true
+        textView.isSelected = false
     }
 
 }
