@@ -56,10 +56,12 @@
 
     <Button
         android:id="@+id/btnAddToBag"
+        style="@style/my_app_compat_button"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_height"
         android:layout_marginHorizontal="@dimen/item_horizontal_margin"
         android:layout_marginBottom="16dp"
+        android:background="@drawable/selector_button"
         android:text="@string/bag_dish_price_format"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
