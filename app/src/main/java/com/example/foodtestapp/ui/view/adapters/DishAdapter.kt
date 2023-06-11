@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.foodtestapp.core.Dish
 import com.example.foodtestapp.ui.view.listeners.OnDishClickListener
 import online.example.foodtestapp.databinding.RvDishesItemBinding
@@ -53,6 +54,7 @@ class DishAdapter(private val context: Context) :
             Glide
                 .with(context)
                 .load(dishItem.image_url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.ivImage)
 
             binding.cvDish.setOnClickListener {

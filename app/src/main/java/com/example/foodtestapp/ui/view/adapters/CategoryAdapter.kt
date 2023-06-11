@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.foodtestapp.core.FoodCategory
 import com.example.foodtestapp.ui.view.listeners.OnCategoryClickListener
 import online.example.foodtestapp.databinding.RvCategoriesItemBinding
@@ -53,14 +55,13 @@ class CategoryAdapter(private val context: Context) :
             Glide
                 .with(context)
                 .load(foodCategoryItem.image_url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.ivCategory)
 
             binding.cvCategory.setOnClickListener {
                 listener.onCategoryClick(foodCategoryItem)
             }
-
         }
     }
-
 
 }

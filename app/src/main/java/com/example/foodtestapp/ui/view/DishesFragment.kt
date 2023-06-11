@@ -1,6 +1,5 @@
 package com.example.foodtestapp.ui.view
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -59,7 +58,6 @@ class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
         setupDishAdapter()
         initObservers()
         setupMenu()
-        initViews()
     }
 
     private fun setupMenu() {
@@ -105,6 +103,7 @@ class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
 
         dishesViewModel.tag.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty() && (!dishesViewModel.allDishes.value.isNullOrEmpty())) {
+                dishesByTag.clear()
                 dishesByTag.addAll(dishesViewModel.allDishes.value!!.filter { dish ->
                     dish.tags.contains(
                         dishesViewModel.tag.value
@@ -113,10 +112,6 @@ class DishesFragment : Fragment(), OnDishClickListener, OnTagClickListener {
                 dishAdapter!!.setData(dishesByTag)
             }
         }
-
-    }
-
-    private fun initViews() {
 
     }
 

@@ -22,7 +22,7 @@
         local:subtitleTextAppearance="@style/txtSubtitleToolbar"
         local:subtitleTextColor="@color/theme_toolbar_subtitle_text_color"
         local:theme="@style/ThemeOverlay.AppCompat.Dark"
-        local:title="Санкт-Петербург"
+        local:title="@null"
         local:titleTextAppearance="@style/txtToolbar"
         local:titleTextColor="@color/theme_toolbar_text_color">
 

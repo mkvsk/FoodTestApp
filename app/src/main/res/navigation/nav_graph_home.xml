@@ -13,13 +13,16 @@
 
         <action
             android:id="@+id/action_go_to_dishes_from_categories"
-            app:destination="@id/dishes_dest" />
+            app:destination="@id/dishes_dest"
+            app:popUpToInclusive="true"
+           />
     </fragment>
 
     <fragment
         android:id="@+id/dishes_dest"
         android:name="com.example.foodtestapp.ui.view.DishesFragment"
-        tools:layout="@layout/fragment_dishes" />
+        tools:layout="@layout/fragment_dishes"
+        android:label="@string/bottom_nav_home"/>
 
     <fragment
         android:id="@+id/bag_dest"

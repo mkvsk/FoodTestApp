@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.foodtestapp.core.BagItem
 import com.example.foodtestapp.ui.view.listeners.OnBagItemAddRemoveListener
-import com.example.foodtestapp.ui.view.listeners.OnCategoryClickListener
 import online.example.foodtestapp.R
 import online.example.foodtestapp.databinding.RvBagItemBinding
 
@@ -17,7 +17,6 @@ class BagAdapter(private val context: Context) :
 
     private var data: ArrayList<BagItem> = ArrayList()
     private lateinit var listener: OnBagItemAddRemoveListener
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BagItemViewHolder {
         val binding = RvBagItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BagItemViewHolder(binding)
@@ -52,6 +51,7 @@ class BagAdapter(private val context: Context) :
             Glide
                 .with(context)
                 .load(bagDishItem!!.dish!!.image_url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.ivImage)
 
             binding.tvName.text = bagDishItem.dish!!.name.toString()
@@ -67,9 +67,11 @@ class BagAdapter(private val context: Context) :
 
             binding.btnMinus.setOnClickListener {
                 listener.onBagItemAddRemove(bagDishItem, remove = true)
+                notifyItemChanged(bindingAdapterPosition)
             }
             binding.btnPlus.setOnClickListener {
                 listener.onBagItemAddRemove(bagDishItem, remove = false)
+                notifyItemChanged(bindingAdapterPosition)
             }
         }
     }

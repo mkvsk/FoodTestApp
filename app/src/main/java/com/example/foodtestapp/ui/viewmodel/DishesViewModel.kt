@@ -24,7 +24,7 @@ class DishesViewModel : ViewModel() {
     }
 
     fun getDishes() {
-        var tmp = HashSet<String>()
+        val tmp = HashSet<String>()
         repository.getDishes(object : ResultCallback<GetDishesResponse> {
             override fun onResult(value: GetDishesResponse?) {
                 value?.let {
@@ -35,7 +35,6 @@ class DishesViewModel : ViewModel() {
                         }
                     }
                     setAllTags(tmp)
-                    Log.d(TAG, "onResult SET TAGS: ${allTags.value.toString()}")
                 }
             }
 
@@ -43,7 +42,6 @@ class DishesViewModel : ViewModel() {
 
         })
     }
-
 
     private val _allTags = MutableLiveData<HashSet<String>>()
     val allTags: LiveData<HashSet<String>> get() = _allTags

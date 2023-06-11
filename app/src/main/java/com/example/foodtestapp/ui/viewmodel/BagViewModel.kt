@@ -1,12 +1,10 @@
 package com.example.foodtestapp.ui.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodtestapp.core.BagItem
 import com.example.foodtestapp.core.Dish
-import online.example.foodtestapp.R
 
 class BagViewModel : ViewModel() {
     companion object {
@@ -40,29 +38,23 @@ class BagViewModel : ViewModel() {
             setBagItems(ArrayList())
             bagItems.value!!.add(BagItem(dish))
         } else {
-            if (bagItems.value!!.contains(BagItem(dish))) {
-                val itemToAdd = bagItems.value!!.find { it.dish == dish }
-                bagItems.value!!.forEach { bagItem ->
-                    if (bagItem == itemToAdd) {
-                        bagItem.qty!!.inc()
-                    }
-                }
+            val findItem = bagItems.value!!.find { it.dish!!.id!! == dish.id }
+            if (findItem != null) {
+                findItem.qty = findItem.qty!! + 1
             } else {
                 bagItems.value!!.add(BagItem(dish))
             }
         }
+        recalculateTotalSum()
     }
 
     fun removeFromBag(bagItem: BagItem) {
         val itemToRemove = bagItems.value!!.find { it == bagItem }
-        if (itemToRemove!!.qty!! == 1) {
+        if (itemToRemove!!.qty!! <= 1) {
             bagItems.value!!.remove(itemToRemove)
+        } else {
+            itemToRemove.qty = itemToRemove.qty!! - 1
         }
-//        else if (itemToRemove.qty!! > 1) {
-//            bagItems.value!!.find {
-//                it.dish == dish
-//                it.qty.inc()
-//            }
-//        }
+        recalculateTotalSum()
     }
 }

@@ -22,7 +22,7 @@
         local:subtitleTextAppearance="@style/txtSubtitleToolbar"
         local:subtitleTextColor="@color/theme_toolbar_subtitle_text_color"
         local:theme="@style/ThemeOverlay.AppCompat.Dark"
-        local:title="Санкт-Петербург"
+        local:title="@null"
         local:titleTextAppearance="@style/txtToolbar"
         local:titleTextColor="@color/theme_toolbar_text_color">
 
@@ -46,8 +46,10 @@
         android:layout_marginTop="8dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
+        android:paddingBottom="180dp"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="100dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
