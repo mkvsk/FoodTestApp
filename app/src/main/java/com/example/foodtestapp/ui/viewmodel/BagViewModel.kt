@@ -11,7 +11,7 @@ class BagViewModel : ViewModel() {
         private const val TAG = "BagViewModel"
     }
 
-    private val _totalSum = MutableLiveData<Double>(0.0)
+    private val _totalSum = MutableLiveData(0.0)
     val totalSum: LiveData<Double> get() = _totalSum
 
     fun setTotalSum(value: Double) {
@@ -29,7 +29,7 @@ class BagViewModel : ViewModel() {
         if (bagItems.value.isNullOrEmpty()) {
             setTotalSum(0.0)
         } else {
-            setTotalSum(bagItems.value!!.sumOf { it.dish!!.price!! * it.qty!! }.toDouble())
+            setTotalSum(bagItems.value!!.sumOf { it.dish!!.price!! * it.qty!! })
         }
     }
 

@@ -21,7 +21,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import online.example.foodtestapp.R
 import online.example.foodtestapp.databinding.ActivityMainBinding
-import java.util.*
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,7 +33,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var foodCategoriesViewModel: FoodCategoriesViewModel
     private lateinit var userViewModel: UserViewModel
 
-    val PERMISSION_ID = 1
+    companion object {
+        private const val ACCESS_LOCATION_PERMISSION_ID = 1
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         instantiateViewModels()
@@ -46,45 +49,54 @@ class MainActivity : AppCompatActivity() {
             NavigationUI.onNavDestinationSelected(it, navController)
             return@setOnItemSelectedListener true
         }
-        getLastLocation()
+        requestPermission()
     }
 
-    private fun getLastLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermission()
-        } else {
-            val geocoder = Geocoder(this, Locale.getDefault())
-            val mLocationRequest: LocationRequest = LocationRequest.create()
-            mLocationRequest.interval = 6000
-            mLocationRequest.fastestInterval = 500
-            mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            val mLocationCallback: LocationCallback = object : LocationCallback() {
-                override fun onLocationResult(locationResult: LocationResult) {
-                    for (location in locationResult.locations) {
-                        location?.let { it ->
-                            val fromLocation = geocoder.getFromLocation(
-                                it.latitude,
-                                it.longitude,
-                                1
-                            )
-                            if (!fromLocation.isNullOrEmpty()) {
-                                fromLocation[0].locality?.let { city ->
-                                    userViewModel.setLocationCity(city)
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            ACCESS_LOCATION_PERMISSION_ID -> {
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestPermission()
+                } else {
+                    val geocoder = Geocoder(this, Locale.getDefault())
+                    val mLocationRequest: LocationRequest = LocationRequest.create()
+                    mLocationRequest.interval = 600
+                    mLocationRequest.fastestInterval = 500
+                    mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+                    val mLocationCallback: LocationCallback = object : LocationCallback() {
+                        override fun onLocationResult(locationResult: LocationResult) {
+                            for (location in locationResult.locations) {
+                                location?.let { it ->
+                                    val fromLocation = geocoder.getFromLocation(
+                                        it.latitude,
+                                        it.longitude,
+                                        1
+                                    )
+                                    if (!fromLocation.isNullOrEmpty()) {
+                                        fromLocation[0].locality?.let { city ->
+                                            userViewModel.setLocationCity(city)
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
+                    LocationServices.getFusedLocationProviderClient(this)
+                        .requestLocationUpdates(mLocationRequest, mLocationCallback, null)
                 }
             }
-            LocationServices.getFusedLocationProviderClient(this)
-                .requestLocationUpdates(mLocationRequest, mLocationCallback, null)
         }
     }
 
@@ -94,7 +106,7 @@ class MainActivity : AppCompatActivity() {
             arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
-            ), PERMISSION_ID
+            ), ACCESS_LOCATION_PERMISSION_ID
         )
     }
 

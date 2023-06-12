@@ -30,10 +30,14 @@ class HomeFragment : Fragment(), OnCategoryClickListener {
 
     private var categoryAdapter: CategoryAdapter? = null
     private var rv: RecyclerView? = null
-    final val KEY_RECYCLER_STATE = "recycler_state"
     private var mBundleRecyclerViewState: Bundle? = null
     private var mListState: Parcelable? = null
     private var mRecyclerView: RecyclerView? = null
+
+    companion object {
+        private const val KEY_RECYCLER_STATE = "recycler_state_category"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
