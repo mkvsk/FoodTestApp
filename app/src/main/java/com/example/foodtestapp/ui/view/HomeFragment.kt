@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodtestapp.core.FoodCategory
-import com.example.foodtestapp.ui.util.FormatUtil
 import com.example.foodtestapp.ui.util.obtainViewModel
 import com.example.foodtestapp.ui.view.adapters.CategoryAdapter
 import com.example.foodtestapp.ui.view.listeners.OnCategoryClickListener
 import com.example.foodtestapp.ui.viewmodel.FoodCategoriesViewModel
 import com.example.foodtestapp.ui.viewmodel.UserViewModel
+import FormatUtil.getCurrentDateFormat
 import online.example.foodtestapp.R
 import online.example.foodtestapp.databinding.FragmentHomeBinding
 
@@ -79,7 +79,7 @@ class HomeFragment : Fragment(), OnCategoryClickListener {
     }
 
     private fun initViews() {
-        binding.toolbar.subtitle = FormatUtil.getCurrentDateFormat()
+        binding.toolbar.subtitle = getCurrentDateFormat()
     }
 
     override fun onResume() {

@@ -1,5 +1,6 @@
 package com.example.foodtestapp.ui.view
 
+import FormatUtil.getCurrentDateFormat as Format
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodtestapp.core.BagItem
-import com.example.foodtestapp.ui.util.FormatUtil
 import com.example.foodtestapp.ui.util.obtainViewModel
 import com.example.foodtestapp.ui.view.adapters.BagAdapter
 import com.example.foodtestapp.ui.view.listeners.OnBagItemAddRemoveListener
@@ -43,7 +43,7 @@ class BagFragment : Fragment(), OnBagItemAddRemoveListener {
     }
 
     private fun initViews() {
-        binding.toolbar.subtitle = FormatUtil.getCurrentDateFormat()
+        binding.toolbar.subtitle = Format()
     }
 
     private fun initObservers() {
